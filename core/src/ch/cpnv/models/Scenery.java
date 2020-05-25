@@ -11,9 +11,26 @@ public final class Scenery {
     public static final int BLOCK_SIZE = 30;
 
     private ArrayList<PhysicalObject> scene;
+    private ArrayList<Tnt> ListTnt;
+    private ArrayList<Block> ListBlock;
+
+
 
     public Scenery(){
+
         scene = new ArrayList<PhysicalObject>();
+
+        ListTnt = new ArrayList<Tnt>();
+        for (int i = 0; i < 5; i++) {
+            tnt = new Tnt(new Vector2(WORLD_WIDTH / (i+1), (float) (WORLD_HEIGHT/5.5)));
+            ListTnt.add(tnt);
+        }
+
+        ListBlock= new ArrayList<Block>();
+        for (int i = 0; i < 30; i++) {
+            block = new Block(new Vector2((float) (WORLD_WIDTH-(i*45)), WORLD_HEIGHT/7));
+            ListBlock.add(block);
+        }
     }
 
 

@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.TimeUtils;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -31,6 +32,8 @@ public class KevAngryWirds extends ApplicationAdapter {
 	private ArrayList<Tnt> ListTnt;
 	private ArrayList<Block> ListBlock;
 
+	public static long startTime = TimeUtils.millis();
+
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
@@ -44,17 +47,7 @@ public class KevAngryWirds extends ApplicationAdapter {
 		birdy = new Bird(150, 130);
 		waspy = new Wasp(new Vector2(WORLD_WIDTH / 2, WORLD_HEIGHT / 2), new Vector2(20, 20));
 
-		ListTnt = new ArrayList<Tnt>();
-		for (int i = 0; i < 5; i++) {
-			tnt = new Tnt(new Vector2(WORLD_WIDTH / (i+1), (float) (WORLD_HEIGHT/5.5)));
-			ListTnt.add(tnt);
-		}
 
-		ListBlock= new ArrayList<Block>();
-		for (int i = 0; i < 30; i++) {
-			block = new Block(new Vector2((float) (WORLD_WIDTH-(i*45)), WORLD_HEIGHT/7));
-			ListBlock.add(block);
-		}
 	}
 
 	@Override
@@ -66,17 +59,14 @@ public class KevAngryWirds extends ApplicationAdapter {
 		batch.draw(background, 0, 0, camera.viewportWidth, camera.viewportHeight);
 		birdy.draw(batch);
 		waspy.draw(batch);
-		for (Tnt tnt : ListTnt) tnt.draw(batch);
-		for (Block block : ListBlock) block.draw(batch);
+		Scenery.draw(batch);
 		batch.end();
 	}
 
 	public void update(){
 		float dt = Gdx.graphics.getDeltaTime();
 		birdy.move(dt);
-		//birdy.resetPos(dt);
-		//waspy.accelerate(dt);
-		waspy.move();
+		waspy.move(dt);
 	}
 
 	@Override
