@@ -1,11 +1,14 @@
 package ch.cpnv.models;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
 
 public class PhysicalObject extends Sprite {
 
-    public void draw(Batch batch){
-
+    public PhysicalObject(Vector2 position, float width, float height, String picname) {
+        super(new Texture(picname));
+        setBounds(position.x, position.y, width, height);
     }
 }
