@@ -11,4 +11,9 @@ public class PhysicalObject extends Sprite {
         super(new Texture(picname));
         setBounds(position.x, position.y, width, height);
     }
+
+    public boolean collidesWith(PhysicalObject o)
+    {
+        return this.getBoundingRectangle().overlaps(o.getBoundingRectangle());
+    }
 }

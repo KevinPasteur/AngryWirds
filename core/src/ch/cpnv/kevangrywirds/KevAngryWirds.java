@@ -19,19 +19,14 @@ public class KevAngryWirds extends ApplicationAdapter {
 	public static final int WORLD_WIDTH = 1600;
 	public static final int WORLD_HEIGHT = 900;
     public static final int FLOOR_HEIGHT = 120;
-	public static Random alea;
 
 	private SpriteBatch batch;
 	private Texture background;
 	private Bird birdy;
 	private Wasp waspy;
 	private Scenery scene;
-	private Tnt tnt;
-	private Block block;
 
 	private OrthographicCamera camera;
-	private ArrayList<Tnt> ListTnt;
-	private ArrayList<Block> ListBlock;
 
 	public static long startTime = TimeUtils.millis();
 
@@ -44,8 +39,8 @@ public class KevAngryWirds extends ApplicationAdapter {
 		camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
 		camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
 		camera.update();
-		scene = new Scenery();
 
+		scene = new Scenery();
 		birdy = new Bird(150, 130);
 		waspy = new Wasp(new Vector2(WORLD_WIDTH / 2, WORLD_HEIGHT / 2), new Vector2(20, 20));
 
@@ -59,9 +54,11 @@ public class KevAngryWirds extends ApplicationAdapter {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		batch.draw(background, 0, 0, camera.viewportWidth, camera.viewportHeight);
+
 		birdy.draw(batch);
 		waspy.draw(batch);
 		scene.draw(batch);
+
 		batch.end();
 	}
 

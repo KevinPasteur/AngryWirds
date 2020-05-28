@@ -6,22 +6,19 @@ import com.badlogic.gdx.math.Vector2;
 import java.util.ArrayList;
 
 import ch.cpnv.kevangrywirds.KevAngryWirds;
+import sun.awt.AWTAccessor;
 
 public final class Scenery {
     public static final int BLOCK_SIZE = 30;
-    private static final int WORLD_WIDTH = 1600;
-    private static final int WORLD_HEIGHT = 900 ;
 
     private ArrayList<PhysicalObject> scene;
-    private ArrayList<Tnt> ListTnt;
-    private ArrayList<Block> ListBlock;
-
-
 
     public Scenery(){
         scene = new ArrayList<PhysicalObject>();
+
         addFloorBoxes();
         addTnts();
+        addPigs();
     }
 
 
@@ -34,13 +31,6 @@ public final class Scenery {
         scene.add(el);
     }
 
-    /**
-     * Lay down a line of blocks to act a floor to the scene
-     */
-    public void addFloor() {
-
-    }
-
     public void addFloorBoxes(){
         for (int i = 5; i < KevAngryWirds.WORLD_WIDTH / BLOCK_SIZE; i++) {
             addElement(new PhysicalObject(new Vector2(i * BLOCK_SIZE, KevAngryWirds.FLOOR_HEIGHT), BLOCK_SIZE, BLOCK_SIZE, "block.png"));
@@ -48,9 +38,21 @@ public final class Scenery {
     }
 
     public void addTnts(){
-        for (int i = 0; i < 5; i++) {
-            Tnt tnt = new Tnt(new Vector2(WORLD_WIDTH / (i + 1), (float) (WORLD_HEIGHT / 5.5)));
-            ListTnt.add(tnt);
+        for (int i = 0; i <= 4; i++) {
+            addElement(new Tnt(new Vector2(KevAngryWirds.WORLD_WIDTH / (i + 1), (float) (KevAngryWirds.WORLD_HEIGHT / 6))));
+        }
+    }
+
+    public void addPigs(){
+        for (int i = 0; i <= 5; i++) {
+            Pig pig = new Pig(new Vector2(KevAngryWirds.WORLD_WIDTH / (i + 1), (float) (KevAngryWirds.WORLD_HEIGHT / 6)));
+
+            for(PhysicalObject p : scene ) {
+                if(isObjectXBetween(p, pig.getX(),pig.getX()+pig.getWidth())){
+                    pig.setY(p.getY()+p.getHeight()-4);
+                }
+            }
+            addElement(pig);
         }
     }
 
@@ -62,6 +64,11 @@ public final class Scenery {
      */
     public void draw(Batch batch) {
         for (PhysicalObject p : scene) p.draw(batch);
+    }
+
+    public boolean isObjectXBetween(PhysicalObject object, float a, float b) {
+        return (a < object.getX() + object.getWidth() && a > object.getX()) ||
+                (b < object.getX() + object.getWidth() && b > object.getX());
     }
 
 }
