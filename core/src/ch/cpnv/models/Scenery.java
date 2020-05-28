@@ -28,6 +28,7 @@ public final class Scenery {
      * @param el
      */
     public void addElement(PhysicalObject el) {
+        ChangeYIfColliding(el);
         scene.add(el);
     }
 
@@ -45,17 +46,9 @@ public final class Scenery {
 
     public void addPigs(){
         for (int i = 0; i <= 5; i++) {
-            Pig pig = new Pig(new Vector2(KevAngryWirds.WORLD_WIDTH / (i + 1), (float) (KevAngryWirds.WORLD_HEIGHT / 6)));
-
-            for(PhysicalObject p : scene ) {
-                if(isObjectXBetween(p, pig.getX(),pig.getX()+pig.getWidth())){
-                    pig.setY(p.getY()+p.getHeight()-4);
-                }
-            }
-            addElement(pig);
+            addElement(new Pig(new Vector2(KevAngryWirds.WORLD_WIDTH / (i + 1), (float) (KevAngryWirds.WORLD_HEIGHT / 6))));
         }
     }
-
 
     /**
      * Render the whole scenary
@@ -66,9 +59,12 @@ public final class Scenery {
         for (PhysicalObject p : scene) p.draw(batch);
     }
 
-    public boolean isObjectXBetween(PhysicalObject object, float a, float b) {
-        return (a < object.getX() + object.getWidth() && a > object.getX()) ||
-                (b < object.getX() + object.getWidth() && b > object.getX());
+    public void ChangeYIfColliding(PhysicalObject p)
+    {
+        for(PhysicalObject alreadyExistingP : scene ) {
+            if(p.collidesWith(alreadyExistingP)) {
+                p.setY(p.getY() + p.getHeight()+10);
+            }
+        }
     }
-
 }
