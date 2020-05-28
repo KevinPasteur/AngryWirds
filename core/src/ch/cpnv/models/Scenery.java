@@ -4,12 +4,12 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import ch.cpnv.kevangrywirds.KevAngryWirds;
-import sun.awt.AWTAccessor;
 
 public final class Scenery {
-    public static final int BLOCK_SIZE = 30;
+    private static final int BLOCK_SIZE = 45;
 
     private ArrayList<PhysicalObject> scene;
 
@@ -20,7 +20,6 @@ public final class Scenery {
         addTnts();
         addPigs();
     }
-
 
     /**
      * Add one piece of scenary
@@ -33,20 +32,28 @@ public final class Scenery {
     }
 
     public void addFloorBoxes(){
-        for (int i = 5; i < KevAngryWirds.WORLD_WIDTH / BLOCK_SIZE; i++) {
-            addElement(new PhysicalObject(new Vector2(i * BLOCK_SIZE, KevAngryWirds.FLOOR_HEIGHT), BLOCK_SIZE, BLOCK_SIZE, "block.png"));
+        for (int i = 10; i < KevAngryWirds.WORLD_WIDTH / BLOCK_SIZE; i++) {
+            addElement(new Block(new Vector2(i * BLOCK_SIZE, KevAngryWirds.FLOOR_HEIGHT)));
         }
     }
 
     public void addTnts(){
+        Random r = new Random();
+        int low = 500;
+        int high = 1500;
+
         for (int i = 0; i <= 4; i++) {
-            addElement(new Tnt(new Vector2(KevAngryWirds.WORLD_WIDTH / (i + 1), (float) (KevAngryWirds.WORLD_HEIGHT / 6))));
+            addElement(new Tnt(new Vector2(r.nextInt(high-low) + low, (float) (KevAngryWirds.WORLD_HEIGHT / 6))));
         }
     }
 
     public void addPigs(){
-        for (int i = 0; i <= 5; i++) {
-            addElement(new Pig(new Vector2(KevAngryWirds.WORLD_WIDTH / (i + 1), (float) (KevAngryWirds.WORLD_HEIGHT / 6))));
+        Random r = new Random();
+        int low = 500;
+        int high = 1500;
+
+        for (int i = 0; i < 3; i++) {
+            addElement(new Pig(new Vector2(r.nextInt(high-low) + low, (float) (KevAngryWirds.WORLD_HEIGHT / 6))));
         }
     }
 
@@ -63,7 +70,7 @@ public final class Scenery {
     {
         for(PhysicalObject alreadyExistingP : scene ) {
             if(p.collidesWith(alreadyExistingP)) {
-                p.setY(p.getY() + p.getHeight()+10);
+                p.setY(alreadyExistingP.getY() + alreadyExistingP.getHeight()-5);
             }
         }
     }
