@@ -9,6 +9,8 @@ import ch.cpnv.kevangrywirds.KevAngryWirds;
 
 public final class Scenery {
     public static final int BLOCK_SIZE = 30;
+    private static final int WORLD_WIDTH = 1600;
+    private static final int WORLD_HEIGHT = 900 ;
 
     private ArrayList<PhysicalObject> scene;
     private ArrayList<Tnt> ListTnt;
@@ -17,20 +19,9 @@ public final class Scenery {
 
 
     public Scenery(){
-
         scene = new ArrayList<PhysicalObject>();
-
-        ListTnt = new ArrayList<Tnt>();
-        for (int i = 0; i < 5; i++) {
-            tnt = new Tnt(new Vector2(WORLD_WIDTH / (i+1), (float) (WORLD_HEIGHT/5.5)));
-            ListTnt.add(tnt);
-        }
-
-        ListBlock= new ArrayList<Block>();
-        for (int i = 0; i < 30; i++) {
-            block = new Block(new Vector2((float) (WORLD_WIDTH-(i*45)), WORLD_HEIGHT/7));
-            ListBlock.add(block);
-        }
+        addFloorBoxes();
+        addTnts();
     }
 
 
@@ -47,10 +38,22 @@ public final class Scenery {
      * Lay down a line of blocks to act a floor to the scene
      */
     public void addFloor() {
+
+    }
+
+    public void addFloorBoxes(){
         for (int i = 5; i < KevAngryWirds.WORLD_WIDTH / BLOCK_SIZE; i++) {
             addElement(new PhysicalObject(new Vector2(i * BLOCK_SIZE, KevAngryWirds.FLOOR_HEIGHT), BLOCK_SIZE, BLOCK_SIZE, "block.png"));
         }
     }
+
+    public void addTnts(){
+        for (int i = 0; i < 5; i++) {
+            Tnt tnt = new Tnt(new Vector2(WORLD_WIDTH / (i + 1), (float) (WORLD_HEIGHT / 5.5)));
+            ListTnt.add(tnt);
+        }
+    }
+
 
     /**
      * Render the whole scenary
