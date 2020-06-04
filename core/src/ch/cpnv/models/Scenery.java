@@ -1,5 +1,6 @@
 package ch.cpnv.models;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 
@@ -19,6 +20,8 @@ public final class Scenery {
         addFloorBoxes();
         addTnts();
         addPigs();
+        addSlingshotFront();
+        addSlingshotBack();
     }
 
     /**
@@ -27,8 +30,18 @@ public final class Scenery {
      * @param el
      */
     public void addElement(PhysicalObject el) {
+
         ChangeYIfColliding(el);
         scene.add(el);
+    }
+
+    public void addSlingshotFront(){
+        addElement(new PhysicalObject(new Vector2(200,KevAngryWirds.FLOOR_HEIGHT),100,200,"slingshot1.png"));
+    }
+
+    public void addSlingshotBack(){
+        addElement(new PhysicalObject(new Vector2(200,0),100,200,"slingshot2.png"));
+
     }
 
     public void addFloorBoxes(){
@@ -42,7 +55,7 @@ public final class Scenery {
         int low = 500;
         int high = 1500;
 
-        for (int i = 0; i <= 4; i++) {
+        for (int i = 0; i <= 3; i++) {
             addElement(new Tnt(new Vector2(r.nextInt(high-low) + low, (float) (KevAngryWirds.WORLD_HEIGHT / 6))));
         }
     }
@@ -74,4 +87,5 @@ public final class Scenery {
             }
         }
     }
+
 }
