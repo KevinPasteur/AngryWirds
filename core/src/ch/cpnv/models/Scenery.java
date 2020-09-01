@@ -10,6 +10,7 @@ import java.util.Random;
 import ch.cpnv.kevangrywirds.KevAngryWirds;
 
 public final class Scenery {
+
     private static final int BLOCK_SIZE = 45;
 
     private ArrayList<PhysicalObject> scene;
@@ -21,7 +22,7 @@ public final class Scenery {
         addTnts();
         addPigs();
         addSlingshotFront();
-        addSlingshotBack();
+        //addSlingshotBack();
     }
 
     /**
@@ -31,17 +32,16 @@ public final class Scenery {
      */
     public void addElement(PhysicalObject el) {
 
-        ChangeYIfColliding(el);
+        changeYIfColliding(el);
         scene.add(el);
     }
 
+   /* public void addSlingshotBack(){
+        scene.add(new PhysicalObject(new Vector2(200,KevAngryWirds.FLOOR_HEIGHT),100,200,"slingshot1.png"));
+    }*/
+
     public void addSlingshotFront(){
-        addElement(new PhysicalObject(new Vector2(200,KevAngryWirds.FLOOR_HEIGHT),100,200,"slingshot1.png"));
-    }
-
-    public void addSlingshotBack(){
-        addElement(new PhysicalObject(new Vector2(200,0),100,200,"slingshot2.png"));
-
+        scene.add(new PhysicalObject(new Vector2(200,KevAngryWirds.FLOOR_HEIGHT),100,200,"slingshot2.png"));
     }
 
     public void addFloorBoxes(){
@@ -79,9 +79,10 @@ public final class Scenery {
         for (PhysicalObject p : scene) p.draw(batch);
     }
 
-    public void ChangeYIfColliding(PhysicalObject p)
+    public void changeYIfColliding(PhysicalObject p)
     {
         for(PhysicalObject alreadyExistingP : scene ) {
+            
             if(p.collidesWith(alreadyExistingP)) {
                 p.setY(alreadyExistingP.getY() + alreadyExistingP.getHeight()-5);
             }

@@ -63,9 +63,9 @@ public class KevAngryWirds extends ApplicationAdapter implements InputProcessor 
 
 
 		waspy.draw(batch);
-		scene.draw(batch);
-		birdy.draw(batch);
 
+		birdy.draw(batch);
+		scene.draw(batch);
 		batch.end();
 		Gdx.input.setInputProcessor(this);
 	}

@@ -14,6 +14,7 @@ public class PhysicalObject extends Sprite {
 
     public boolean collidesWith(PhysicalObject o)
     {
+
         return this.getBoundingRectangle().overlaps(o.getBoundingRectangle());
     }
 }
