@@ -21,8 +21,8 @@ public final class Scenery {
         addFloorBoxes();
         addTnts();
         addPigs();
-        addSlingshotFront();
-        //addSlingshotBack();
+        //addSlingshotFront();
+        addSlingshotBack();
     }
 
     /**
@@ -36,13 +36,13 @@ public final class Scenery {
         scene.add(el);
     }
 
-   /* public void addSlingshotBack(){
+    public void addSlingshotBack(){
         scene.add(new PhysicalObject(new Vector2(200,KevAngryWirds.FLOOR_HEIGHT),100,200,"slingshot1.png"));
-    }*/
-
-    public void addSlingshotFront(){
-        scene.add(new PhysicalObject(new Vector2(200,KevAngryWirds.FLOOR_HEIGHT),100,200,"slingshot2.png"));
     }
+
+    /*public void addSlingshotFront(){
+        scene.add(new PhysicalObject(new Vector2(200,KevAngryWirds.FLOOR_HEIGHT),100,200,"slingshot2.png"));
+    }*/
 
     public void addFloorBoxes(){
         for (int i = 10; i < KevAngryWirds.WORLD_WIDTH / BLOCK_SIZE; i++) {
