@@ -71,7 +71,9 @@ public class KevAngryWirds extends ApplicationAdapter implements InputProcessor 
 
 	public void update(){
 		float dt = Gdx.graphics.getDeltaTime();
-		//birdy.move(dt);
+		birdy.accelerate(dt);
+		birdy.move(dt);
+
 
 		waspy.move(dt);
 	}
@@ -105,8 +107,9 @@ public class KevAngryWirds extends ApplicationAdapter implements InputProcessor 
 	}
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		birdy.fire();
-		System.out.println("test");
+
+		birdy.setSpeed(new Vector2(100,100));
+
 		return false;
 	}
 

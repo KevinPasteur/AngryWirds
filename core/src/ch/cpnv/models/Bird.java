@@ -19,31 +19,13 @@ public final class Bird extends MovingObject {
         super(new Vector2(posX,posY), WIDTH, HEIGHT, PICNAME, new Vector2(0,0));
     }
     public void accelerate(float dt){
-
-    }
-
-    public void resetPos(float dt){
-        //System.out.println(this.getY());
-        if(this.getY() < 0) {
-            this.setPosition(150, 130);
-            this.move(dt);
-        }
+        speed.y -= 50*dt*2;
     }
 
     public void move(float dt){
         time+=dt;
-        this.translate(this.vx(),this.vy(time));
-    }
-
-    public void fire(){
+        this.translate(speed.x*dt,speed.y*dt);
 
     }
 
-    private float vx(){
-        return v0*math.cosDeg(70);
-    }
-
-    private float vy(float dt){
-        return v0*math.sinDeg(70)-10*dt;
-    }
 }
