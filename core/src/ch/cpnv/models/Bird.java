@@ -35,6 +35,10 @@ public final class Bird extends MovingObject {
         this.translate(this.vx(),this.vy(time));
     }
 
+    public void fire(){
+
+    }
+
     private float vx(){
         return v0*math.cosDeg(70);
     }

@@ -15,7 +15,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 
 
 import ch.cpnv.models.*;
-import sun.awt.AWTAccessor;
+
 
 public class KevAngryWirds extends ApplicationAdapter implements InputProcessor {
 
@@ -48,7 +48,7 @@ public class KevAngryWirds extends ApplicationAdapter implements InputProcessor 
 
 
 		scene = new Scenery();
-		birdy = new Bird(150, 130);
+		birdy = new Bird(210, 250);
 		waspy = new Wasp(new Vector2(WORLD_WIDTH / 2, WORLD_HEIGHT / 2), new Vector2(20, 20));
 
 
@@ -59,21 +59,20 @@ public class KevAngryWirds extends ApplicationAdapter implements InputProcessor 
 		update();
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
+
 		batch.draw(background, 0, 0, camera.viewportWidth, camera.viewportHeight);
-
-
 		waspy.draw(batch);
-
 		birdy.draw(batch);
 		scene.draw(batch);
+
 		batch.end();
 		Gdx.input.setInputProcessor(this);
 	}
 
 	public void update(){
 		float dt = Gdx.graphics.getDeltaTime();
-
 		//birdy.move(dt);
+
 		waspy.move(dt);
 	}
 
@@ -101,20 +100,22 @@ public class KevAngryWirds extends ApplicationAdapter implements InputProcessor 
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+
 		return false;
 	}
-
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		birdy.fire();
+		System.out.println("test");
 		return false;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		birdy.setPosition((screenX/((float)Gdx.graphics.getWidth()/ WORLD_WIDTH)),(WORLD_HEIGHT-screenY/((float)Gdx.graphics.getHeight()/WORLD_HEIGHT)));
-		System.out.println((float)Gdx.graphics.getWidth()/WORLD_WIDTH);
-		System.out.println(Gdx.graphics.getWidth());
-		System.out.println(WORLD_WIDTH);
+		birdy.setPosition((screenX/((float)Gdx.graphics.getWidth()/ WORLD_WIDTH)-30),(WORLD_HEIGHT-screenY/((float)Gdx.graphics.getHeight()/WORLD_HEIGHT)-30));
+		//System.out.println((float)Gdx.graphics.getWidth()/WORLD_WIDTH);
+		//System.out.println(Gdx.graphics.getWidth());
+		//System.out.println(WORLD_WIDTH);
 		return false;
 	}
 
