@@ -5,14 +5,15 @@ import com.badlogic.gdx.math.Vector2;
 public abstract class MovingObject extends PhysicalObject {
 
     public Vector2 speed;
+    public final int GRAVITY= -800;
 
     public MovingObject(Vector2 position, float width, float height, String picname, Vector2 speed) {
         super(position, width, height, picname);
         this.speed = speed;
     }
 
-    public void move(int dt){
-
+    public void move(float dt){
+        translate(speed.x*dt, speed.y*dt);
     }
 
     public abstract void accelerate(float dt);

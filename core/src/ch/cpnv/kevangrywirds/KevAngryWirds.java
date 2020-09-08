@@ -9,8 +9,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
 
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.TimeUtils;
 
 
@@ -22,6 +24,7 @@ public class KevAngryWirds extends ApplicationAdapter implements InputProcessor 
 	public static final int WORLD_WIDTH = 1600;
 	public static final int WORLD_HEIGHT = 900;
     public static final int FLOOR_HEIGHT = 120;
+    public static final int SLINGSHOT_POWER = 8;
 
 	private SpriteBatch batch;
 	private Texture background;
@@ -71,10 +74,11 @@ public class KevAngryWirds extends ApplicationAdapter implements InputProcessor 
 
 	public void update(){
 		float dt = Gdx.graphics.getDeltaTime();
-		birdy.accelerate(dt);
-		birdy.move(dt);
 
-
+		if(birdy.getState() == Bird.State.FLYING) {
+			birdy.accelerate(dt);
+			birdy.move(dt);
+		}
 		waspy.move(dt);
 	}
 
@@ -102,20 +106,25 @@ public class KevAngryWirds extends ApplicationAdapter implements InputProcessor 
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-
+		Vector3 pointTouched = camera.unproject(new Vector3(screenX,screenY,0));
+		birdy.startAim(new Vector2(pointTouched.x, pointTouched.y));
 		return false;
 	}
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		Vector3 pointTouched = camera.unproject(new Vector3(screenX, screenY,0));
+		birdy.launchFrom(new Vector2(pointTouched.x, pointTouched.y));
 
-		birdy.setSpeed(new Vector2(100,100));
+		//birdy.setSpeed(new Vector2(100,100));
 
 		return false;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		birdy.setPosition((screenX/((float)Gdx.graphics.getWidth()/ WORLD_WIDTH)-30),(WORLD_HEIGHT-screenY/((float)Gdx.graphics.getHeight()/WORLD_HEIGHT)-30));
+		Vector3 pointTouched = camera.unproject(new Vector3(screenX, screenY,0));
+		birdy.drag(new Vector2(pointTouched.x, pointTouched.y));
+		//birdy.setPosition((screenX/((float)Gdx.graphics.getWidth()/ WORLD_WIDTH)-30),(WORLD_HEIGHT-screenY/((float)Gdx.graphics.getHeight()/WORLD_HEIGHT)-30));
 		//System.out.println((float)Gdx.graphics.getWidth()/WORLD_WIDTH);
 		//System.out.println(Gdx.graphics.getWidth());
 		//System.out.println(WORLD_WIDTH);
