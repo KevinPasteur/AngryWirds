@@ -2,6 +2,7 @@ package ch.cpnv.kevangrywirds;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Game;
 
 
 import com.badlogic.gdx.InputProcessor;
@@ -9,14 +10,17 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
 
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.TimeUtils;
+import java.util.Random;
 
 
 import ch.cpnv.models.*;
+import ch.cpnv.models.data.Vocabulary;
+import ch.cpnv.providers.VocProvider;
+import jdk.nashorn.internal.runtime.ECMAException;
 
 
 public class KevAngryWirds extends ApplicationAdapter implements InputProcessor {
@@ -26,11 +30,16 @@ public class KevAngryWirds extends ApplicationAdapter implements InputProcessor 
     public static final int FLOOR_HEIGHT = 120;
     public static final int SLINGSHOT_POWER = 8;
 
+    public static Random alea;
+
 	private SpriteBatch batch;
 	private Texture background;
 	private Bird birdy;
 	private Wasp waspy;
 	private Scenery scene;
+
+	private VocProvider vocSource = VocProvider.getInstance();
+	private Vocabulary voc;
 
 	private OrthographicCamera camera;
 
@@ -50,10 +59,26 @@ public class KevAngryWirds extends ApplicationAdapter implements InputProcessor 
 
 
 
-		scene = new Scenery();
+
+
+
 		birdy = new Bird(210, 250);
 		waspy = new Wasp(new Vector2(WORLD_WIDTH / 2, WORLD_HEIGHT / 2), new Vector2(20, 20));
 
+		voc = vocSource.pickAVoc();
+
+		scene = new Scenery();
+		int pigsLeft = 3;
+		while(pigsLeft>0)
+		{
+			try{
+				scene.addElement(new Pig(new Vector2(KevAngryWirds.alea.nextInt(WORLD_WIDTH * 2 / 3) + WORLD_WIDTH / 3, FLOOR_HEIGHT + 50), voc.pickAWord().getValue1()));
+				pigsLeft--;
+			} catch (Exception e)
+			{
+				Gdx.app.log("ANGRY", "Pig out of bounds: "+ e.getMessage());
+			}
+		}
 
 	}
 

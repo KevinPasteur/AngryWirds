@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import ch.cpnv.kevangrywirds.KevAngryWirds;
+import ch.cpnv.models.data.Vocabulary;
 
 public final class Scenery {
 
@@ -20,7 +21,7 @@ public final class Scenery {
 
         addFloorBoxes();
         addTnts();
-        addPigs();
+        //addPigs();
         //addSlingshotFront();
         addSlingshotBack();
     }
@@ -66,7 +67,7 @@ public final class Scenery {
         int high = 1500;
 
         for (int i = 0; i < 3; i++) {
-            addElement(new Pig(new Vector2(r.nextInt(high-low) + low, (float) (KevAngryWirds.WORLD_HEIGHT / 6))));
+           addElement(new Pig(new Vector2(r.nextInt(high-low) + low, (float) (KevAngryWirds.WORLD_HEIGHT / 6)),"test"));
         }
     }
 
